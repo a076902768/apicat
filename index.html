@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>轉導中...</title>
-  <script src="https://unpkg.com/vue@next"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-</head>
-<body>
-  <div id="app">test</div>
-  <script>
-    const { createApp, onMounted } = Vue;
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>轉導中...</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  </head>
+  <body>
+    <div id="app">test</div>
+    <script>
+      const { createApp, onMounted } = Vue;
 
-    const App = {
-      setup() {
-        onMounted(() => {
-          const getUrlString = location.href;
-          const url = new URL(getUrlString);
-          const api = url.searchParams.get('api');
-          if (api) {
-            window.location.href = 'OKMan://'
-          }
-          // axios.get(api).then((res) => {
-          //   if (res.code === 20000) {
+      const App = {
+        setup() {
+          console.log('hahahahaha');
+          onMounted(() => {
+            const getUrlString = location.href;
+            const url = new URL(getUrlString);
+            const api = url.searchParams.get("api");
+            setTimeout(() => {
+              if (api) {
+                watchVisibility();
+                window.location.href = "OKMan://";
+              }
+            }, 1000);
+            // axios.get(api).then((res) => {
+            //   if (res.code === 20000) {
 
-          //   }
-          // })
-        })
+            //   }
+            // })
+          });
 
-        return {}
-      }
-    }
+          const watchVisibility = () => {
+            window.addEventListener("visibilitychange", () => {
+              if (document.hidden) {
+                window.close();
+              }
+            });
+          };
 
-    const app = createApp(App)
+          return {};
+        },
+      };
 
-    app.mount("#app");
+      const app = createApp(App);
 
-  </script>
-</body>
+      app.mount("#app");
+    </script>
+  </body>
 </html>
